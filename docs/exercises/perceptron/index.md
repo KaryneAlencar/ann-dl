@@ -48,7 +48,7 @@ A Figura 2 apresenta a fronteira de decisão encontrada pelo perceptron sobre os
 
 ![Figura 3](figures/fig3.png)
 
-A Figura 3 mostra a acurácia obtida após cada época durante o treinamento.
+A Figura 3 mostra a acurácia obtida após cada época durante o treinamento.A acurácia apresenta oscilações durante o treinamento, mas atinge 100% na época 25 e permanece em 100% na época 26, quando nenhuma nova atualização é realizada.
 
 ```python
 --8<-- "docs/exercises/perceptron/code/ex1c.py"
@@ -64,7 +64,7 @@ A Figura 3 mostra a acurácia obtida após cada época durante o treinamento.
     \Delta b=\eta(y-\hat y).
     $$
 
-    Nos dados separáveis existe pelo menos uma reta capaz de classificar todas as amostras corretamente. No começo do treino existem vários erros e, portanto, várias atualizações. Cada correção desloca a fronteira de decisão. Conforme a fronteira entra na região que separa as nuvens, menos pontos ficam do lado errado e o número de atualizações por época diminui até chegar a zero. Nesta execução, as atualizações por época foram $[3,3,4,4,3,4,3,4,2,4,2,4,2,3,3,3,2,3,3,2,3,3,2,3,1,0]$. Quando uma passagem inteira produz zero atualizações, todas as amostras estão corretamente classificadas e o treinamento para.
+    Nos dados separáveis existe pelo menos uma reta capaz de classificar todas as amostras corretamente. No começo do treino existem vários erros e, portanto, várias atualizações. Cada correção desloca a fronteira de decisão. Conforme a fronteira entra na região que separa as nuvens, menos pontos ficam do lado errado e o número de atualizações por época apresenta oscilações, mas tende a diminuir até chegar a zero. Nesta execução, as atualizações por época foram $[3,3,4,4,3,4,3,4,2,4,2,4,2,3,3,3,2,3,3,2,3,3,2,3,1,0]$. Quando uma passagem inteira produz zero atualizações, todas as amostras estão corretamente classificadas e o treinamento para.
 
 2. **Efeito de aumentar a taxa de aprendizado para $\eta=1.0$:** A segunda execução utilizou os mesmos dados, a mesma ordem, os mesmos pesos iniciais e o mesmo bias inicial. A única alteração foi a taxa de aprendizado. Com $\eta=0.01$, o treinamento convergiu em **26 épocas**, com **100.00%** de acurácia, $\mathbf{w}=[0.05049707,\ 0.02887168]$ e direção normalizada $\mathbf{w}/\|\mathbf{w}\|=[0.86812305,\ 0.49634905]$. Com $\eta=1.0$, convergiu em **37 épocas**, também com **100.00%** de acurácia, $\mathbf{w}=[5.87061596,\ 3.35923930]$ e direção normalizada $[0.86794992,\ 0.49665172]$.
 
@@ -156,7 +156,9 @@ A Figura 6 compara, ao longo das épocas, a acurácia dos pesos atuais com a mel
     \|\Delta\mathbf{w}\|\approx0.01\times5=0.05.
     $$
 
-    Já o bias anda apenas $|\Delta b|=\eta=0.01$. Assim, por engano, o vetor de pesos pode se mover cerca de cinco vezes mais em magnitude que o bias. Como erros continuam acontecendo nas duas classes, essas correções não desaparecem. O laço não possui um objetivo de maximizar a acurácia global; ele apenas reage à amostra atual. Por isso, uma boa fronteira encontrada em algum instante pode ser deslocada por erros posteriores. Nesta execução, isso aparece na diferença entre a acurácia final de **50.15%** e a acurácia de **71.10%** guardada pelo pocket.
+    Já o bias anda apenas $|\Delta b|=\eta=0.01$. Assim, por engano, o vetor de pesos pode se mover cerca de cinco vezes mais em magnitude que o bias. Como erros continuam acontecendo nas duas classes, essas correções não desaparecem. O laço não possui um objetivo de maximizar a acurácia global; ele apenas reage à amostra atual. Por isso, uma boa fronteira encontrada em algum instante pode ser deslocada por erros posteriores.
+    
+    Na Figura 5, a fronteira correspondente aos pesos finais termina deslocada para baixo da maior parte da nuvem de pontos. Com isso, quase todos os pontos ficam do mesmo lado da reta, o que explica a acurácia final de apenas **50.15%**, próxima de um chute em um dataset balanceado. Já a fronteira do pocket atravessa a região de sobreposição entre as duas classes e produz uma separação melhor, alcançando **71.10%** de acurácia. Isso acontece porque o pocket preserva os melhores pesos encontrados durante o treinamento, enquanto os pesos finais continuam sendo modificados pelas atualizações causadas pelos erros.
 
 2. **Comparação entre a Figura 3 e a Figura 6:** O teorema da convergência do perceptron garante convergência em um número finito de atualizações **quando o conjunto de treinamento é linearmente separável**. No Exercício 1 essa hipótese é satisfeita, então a Figura 3 chega a 100% e depois não há mais atualizações. No Exercício 2, a hipótese de separabilidade linear é violada. Não existe um vetor $\mathbf{w}$ e um bias $b$ capazes de classificar simultaneamente todas as amostras. Consequentemente, sempre restam erros que provocam novas atualizações. A curva dos pesos atuais na Figura 6 pode subir e descer, enquanto a curva do pocket é não decrescente, pois registra a melhor acurácia vista até cada época.
 
