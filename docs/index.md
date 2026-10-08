@@ -13,8 +13,8 @@
 
 ## Entregas
 
-- [ ] Data
-- [ ] Perceptron
+- [X] Data
+- [X] Perceptron
 - [ ] MLP
 - [ ] Projeto
 
