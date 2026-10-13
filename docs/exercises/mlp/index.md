@@ -65,7 +65,7 @@ A perda após outra passagem direta com os parâmetros atualizados é **0.083417
 
 ### A — Gere os dados
 
-Foram geradas **1000 amostras** com `make_blobs`, utilizando centros $[0,0]$, $[3,3]$ e $[-3,-3]$, desvio padrão de 1.2 e `random_state=42`. A Classe 0 contém 500 amostras do grupo central, enquanto a Classe 1 reúne os dois grupos externos, com 250 amostras cada. Os dados foram divididos em 80% para treino e 20% para teste, com estratificação.
+Foram geradas 1000 amostras com `make_blobs`, utilizando centros $[0,0]$, $[3,3]$ e $[-3,-3]$, desvio padrão de 1.2 e `random_state=42`. A Classe 0 contém 500 amostras do grupo central, enquanto a Classe 1 reúne os dois grupos externos, com 250 amostras cada. Os dados foram divididos em 80% para treino e 20% para teste, com estratificação.
 
 ![Figura 1: Dados binários](figures/fig1.png)
 
@@ -127,7 +127,7 @@ Foram geradas **1500 amostras**, com **4 features informativas**, **3 classes** 
 
 ### B — Adapte a rede
 
-A mesma classe `MLP` do Exercício 2 foi reutilizada, sem alterar o código de passagem direta, retropropagação ou atualização. A arquitetura agora possui três saídas, com **softmax** e entropia cruzada categórica:
+A mesma classe `MLP` do Exercício 2 foi reutilizada, sem alterar o código de passagem direta, retropropagação ou atualização. A arquitetura agora possui três saídas, com softmax e entropia cruzada categórica:
 
 $$p_k=\frac{e^{u_k}}{\sum_j e^{u_j}},\qquad L=-\sum_k y_k\log p_k.$$
 
@@ -165,13 +165,13 @@ A matriz de confusão do conjunto de teste foi:
 
 ### D — Análise
 
-O par mais confundido foi **Classes 0 e 1**, com **16 erros bidirecionais** (6 amostras da Classe 0 classificadas como 1 e 10 da Classe 1 classificadas como 0). Como o conjunto possui quatro dimensões informativas e dois grupos por classe, as classes não correspondem necessariamente a regiões simples e compactas. Grupos de classes diferentes podem se aproximar ou se sobrepor no espaço de quatro dimensões, dificultando a separação. A regressão logística obteve **66.33%**, enquanto o MLP alcançou **85.67%**: a camada oculta acrescentou a capacidade de representar fronteiras não lineares entre esses grupos.
+O par mais confundido foi Classes 0 e 1, com 16 erros bidirecionais (6 amostras da Classe 0 classificadas como 1 e 10 da Classe 1 classificadas como 0). Como o conjunto possui quatro dimensões informativas e dois grupos por classe, as classes não correspondem necessariamente a regiões simples e compactas. Grupos de classes diferentes podem se aproximar ou se sobrepor no espaço de quatro dimensões, dificultando a separação. A regressão logística obteve **66.33%**, enquanto o MLP alcançou **85.67%**: a camada oculta acrescentou a capacidade de representar fronteiras não lineares entre esses grupos.
 
 ## Exercício 4
 
 ### A — Treine a rede mais profunda
 
-Foi utilizada a arquitetura **[4, 24, 24, 3]**, com **duas camadas ocultas** de 24 neurônios cada. Foram mantidos os mesmos dados, divisão treino/teste, ativação, taxa de aprendizado **0.2**, **2200 épocas** e semente **42** do Exercício 3. A acurácia no teste foi **84.00%**.
+Foi utilizada a arquitetura **[4, 24, 24, 3]**, com **duas camadas ocultas** de 24 neurônios cada. Foram mantidos os mesmos dados, divisão treino/teste, ativação, taxa de aprendizado **0.2**, **2200 épocas** e semente 42 do Exercício 3. A acurácia no teste foi **84.00%**.
 
 ```python
 --8<-- "docs/exercises/mlp/code/ex4a.py"
@@ -205,7 +205,7 @@ A rede profunda apresentou acurácia média **1.00 ponto percentual inferior** �
 
 ### C — Análise
 
-A segunda camada oculta **não melhorou a generalização** neste experimento. Embora a rede profunda tenha reduzido mais a perda de treino (0.204812 contra 0.269152, na semente 42), sua acurácia de teste foi menor (84.00% contra 85.67%). Isso sugere que a capacidade adicional de ajustar os dados de treino não trouxe uma melhoria correspondente nas previsões de teste.
+A segunda camada oculta não melhorou a generalização neste experimento. Embora a rede profunda tenha reduzido mais a perda de treino (0.204812 contra 0.269152, na semente 42), sua acurácia de teste foi menor (84.00% contra 85.67%). Isso sugere que a capacidade adicional de ajustar os dados de treino não trouxe uma melhoria correspondente nas previsões de teste.
 
 O conjunto possui seis grupos distribuídos entre três classes, e uma camada oculta de 24 neurônios já consegue representar fronteiras relativamente complexas. A rede profunda aumenta os parâmetros de 195 para 795, tornando a otimização mais complexa e oferecendo maior capacidade de ajuste. Ela poderia compensar em dados com estruturas hierárquicas ou composições sucessivas de padrões, como imagens com características locais combinadas em objetos, nos quais várias etapas de transformação são úteis.
 
