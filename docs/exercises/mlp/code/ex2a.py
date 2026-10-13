@@ -1,0 +1,8 @@
+centers=np.array([[0.,0.],[3.,3.],[-3.,-3.]])
+Xb,c=make_blobs(n_samples=[500,250,250],centers=centers,cluster_std=1.2,random_state=42)
+yb=(c>0).astype(int)
+Xbt,Xbe,ybt,ybe=train_test_split(Xb,yb,test_size=.2,random_state=42,stratify=yb)
+
+plt.figure(figsize=(7,5))
+for k in [0,1]:plt.scatter(*Xb[yb==k].T,s=10,alpha=.55,label=f'Classe {k}')
+plt.title('Figura 1: Dados binários não linearmente separáveis');plt.xlabel('x1');plt.ylabel('x2');plt.legend();savefig(1)
