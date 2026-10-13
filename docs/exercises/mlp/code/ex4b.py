@@ -99,4 +99,9 @@ plt.title("Figura 6: Perda de treino — comparação de profundidade")
 plt.xlabel("Época")
 plt.ylabel("Entropia cruzada categórica")
 plt.legend()
+plt.savefig(
+    "docs/exercises/mlp/figures/fig6.png",
+    dpi=300,
+    bbox_inches="tight"
+)
 plt.show()

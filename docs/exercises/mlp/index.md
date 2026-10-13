@@ -411,14 +411,14 @@ Para verificar se a diferença depende da inicialização, foram realizadas trê
 
 | Semente | Rede rasa | Rede profunda |
 |---|---:|---:|
-| 42 | 85.67% | 84.00% |
-| 43 | 84.67% | 84.33% |
-| 44 | 87.33% | 86.33% |
-| **Média** | **85.89%** | **84.89%** |
+| 42 | 85.67% | 86.67% |
+| 43 | 84.67% | 87.00% |
+| 44 | 87.33% | 84.00% |
+| **Média** | **85.89%** | **85.89%** |
 
 
 
-A rede profunda apresentou acurácia média **\*\*1.00 ponto percentual inferior\*\*** à rede rasa.
+As duas arquiteturas apresentaram a mesma acurácia média de 85.89% nas três sementes, resultando em uma diferença média de 0.00 ponto percentual. Entretanto, o desempenho variou entre as inicializações, mostrando que a comparação com apenas uma semente poderia levar a conclusões diferentes.
 
 
 
@@ -438,11 +438,9 @@ A rede profunda apresentou acurácia média **\*\*1.00 ponto percentual inferior
 
 
 
-A segunda camada oculta não melhorou a generalização neste experimento. Embora a rede profunda tenha reduzido mais a perda de treino (0.204812 contra 0.269152, na semente 42), sua acurácia de teste foi menor (84.00% contra 85.67%). Isso sugere que a capacidade adicional de ajustar os dados de treino não trouxe uma melhoria correspondente nas previsões de teste. Esse resultado, isoladamente, não comprova overfitting: para investigá-lo melhor, seria necessário acompanhar também o desempenho em um conjunto de validação ao longo das épocas.
+A adição de uma segunda camada oculta não trouxe uma melhoria consistente na acurácia de teste. Embora a rede profunda tenha apresentado menor perda de treinamento, as duas arquiteturas obtiveram a mesma acurácia média de **85.89%** nas três sementes analisadas. Os resultados individuais variaram conforme a inicialização: a rede profunda foi superior nas sementes 42 e 43, enquanto a rede rasa apresentou melhor desempenho na semente 44. Isso mostra a importância de comparar múltiplas inicializações, em vez de tirar conclusões a partir de uma única execução.
 
-
-
-O conjunto possui seis grupos distribuídos entre três classes, e uma camada oculta de 24 neurônios já consegue representar fronteiras relativamente complexas. A rede profunda aumenta os parâmetros de 195 para 795, tornando a otimização mais complexa e oferecendo maior capacidade de ajuste. Ela poderia compensar em dados com estruturas hierárquicas ou composições sucessivas de padrões, como imagens com características locais combinadas em objetos, nos quais várias etapas de transformação são úteis.
+A rede rasa possui **195 parâmetros**, enquanto a rede profunda possui **795 parâmetros**. Neste conjunto de dados, com seis grupos distribuídos entre três classes, uma camada oculta de 24 neurônios já parece oferecer capacidade suficiente para representar as fronteiras de decisão. A segunda camada aumenta a capacidade do modelo, mas também sua complexidade, sem apresentar ganho médio de acurácia neste experimento. Redes mais profundas podem ser vantajosas em problemas com padrões hierárquicos mais complexos, como imagens, nos quais diferentes camadas aprendem representações sucessivamente mais abstratas.
 
 
 
@@ -460,4 +458,4 @@ O conjunto possui seis grupos distribuídos entre três classes, e uma camada oc
 | 6 | Ex. 3 — arquitetura e acurácia | [4,24,3]; 85.67% |
 | 7 | Ex. 3 — par mais confundido | Classes 0 e 1; 16 erros |
 | 8 | Ex. 4 — arquitetura e acurácia | [4,24,24,3]; 84.00% |
-| 9 | Ex. 4 — diferença média de acurácia (3 sementes) | −1.00 ponto percentual (profunda − rasa) |
+| 9 | Ex. 4 — diferença média de acurácia (3 sementes) | 0.00 ponto percentual (profunda − rasa) |
