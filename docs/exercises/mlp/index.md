@@ -183,10 +183,12 @@ Foi utilizada a arquitetura **[4, 24, 24, 3]**, com **duas camadas ocultas** de 
 
 A Figura 6 compara as perdas de treinamento das duas arquiteturas no Exercício 4B, com semente 42 e o mesmo orçamento de épocas. A tabela a seguir apresenta os resultados das execuções individuais dos Exercícios 3C e 4A; a rede profunda do 4B tem inicialização diferente, pois compartilha o gerador com a rede rasa.
 
+A tabela apresenta os resultados das duas arquiteturas no Exercício 4B, utilizando a semente 42. A rede profunda obteve 86.67% de acurácia, diferentemente dos 84.00% registrados no Exercício 4A, pois, no Exercício 4B, o gerador aleatório foi utilizado primeiro para inicializar a rede rasa, alterando os pesos iniciais da rede profunda.
+
 | Modelo | Camadas ocultas | Parâmetros | Perda final de treino (semente 42) | Acurácia no teste (semente 42) |
 |---|---:|---:|---:|---:|
-| Exercício 3 — [4,24,3] | 1 | 195 | 0.269152 | 85.67% |
-| Exercício 4 — [4,24,24,3] | 2 | 795 | 0.204812 | 84.00% |
+| Rede rasa — [4,24,3] | 1 | 195 | 0.269152 | 85.67% |
+| Rede profunda — [4,24,24,3] | 2 | 795 | 0.197796 | 86.67% |
 
 Para verificar se a diferença depende da inicialização, foram realizadas três execuções com sementes diferentes, mantendo os demais hiperparâmetros fixos:
 
