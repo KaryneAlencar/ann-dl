@@ -67,14 +67,12 @@ A perda após outra passagem direta com os parâmetros atualizados é **0.083417
 
 Foram geradas 1000 amostras com `make_blobs`, utilizando centros $[0,0]$, $[3,3]$ e $[-3,-3]$, desvio padrão de 1.2 e `random_state=42`. A Classe 0 contém 500 amostras do grupo central, enquanto a Classe 1 reúne os dois grupos externos, com 250 amostras cada. Os dados foram divididos em 80% para treino e 20% para teste, com estratificação.
 
-![Figura 1: Dados binários]\(figures/fig1.png)
+![Figura 1: Dados binários](figures/fig1.png)
 
 A Figura 1 mostra a Classe 1 em duas regiões opostas em relação à Classe 0. Por isso, uma única reta não consegue separar corretamente as duas classes.
 
 ```python
-
 --8<-- "docs/exercises/mlp/code/ex2a.py"
-
 ```
 
 ### B — Linha de base
@@ -82,9 +80,7 @@ A Figura 1 mostra a Classe 1 em duas regiões opostas em relação à Classe 0. 
 A regressão logística treinada no conjunto de treino obteve **47.50%** de acurácia no teste. Como sua fronteira de decisão é linear, ela não consegue representar as duas regiões distintas que pertencem à Classe 1.
 
 ```python
-
 --8<-- "docs/exercises/mlp/code/ex2b.py"
-
 ```
 
 ### C — Implemente o MLP
@@ -97,26 +93,22 @@ A retropropagação calcula o delta da saída como $\delta=(\hat y-y)/N$. Em cad
 
 O treinamento utilizou **taxa de aprendizado 0.3**, **1800 épocas** e semente 42. Para garantir reprodutibilidade, os dados foram gerados e divididos com `random_state=42`, enquanto os pesos da classe `MLP` foram inicializados com um gerador `rng = np.random.default_rng(42)` passado à classe `MLP`. No Exercício 4B, foram utilizadas as sementes 42, 43 e 44 para comparar diferentes inicializações, mantendo os demais parâmetros. A acurácia no teste foi de **92.50%**.
 
-![Figura 2: Perda binária]\(figures/fig2.png)
+![Figura 2: Perda binária](figures/fig2.png)
 
 A Figura 2 apresenta a redução da entropia cruzada durante o treinamento.
 
-![Figura 3: Fronteira de decisão]\(figures/fig3.png)
+![Figura 3: Fronteira de decisão](figures/fig3.png)
 
 A Figura 3 apresenta a fronteira de decisão não linear encontrada pelo MLP sobre os pontos de teste.
 
 ```python
-
 --8<-- "docs/exercises/mlp/code/mlp_core.py"
-
 ```
 
 O trecho a seguir realiza o treinamento, mede a acurácia e gera as Figuras 2 e 3.
 
 ```python
-
 --8<-- "docs/exercises/mlp/code/ex2c.py"
-
 ```
 
 ### D — Análise
@@ -130,9 +122,7 @@ A regressão logística ficou abaixo de 50% porque tenta separar as classes com 
 Foram geradas **1500 amostras**, com **4 features informativas**, **3 classes** e **2 grupos por classe**, usando `make_classification`, `class_sep=1.0` e `random_state=42`. A divisão treino/teste foi de 80/20, com estratificação.
 
 ```python
-
 --8<-- "docs/exercises/mlp/code/ex3a.py"
-
 ```
 
 ### B — Adapte a rede
@@ -155,28 +145,22 @@ Para a perda média sobre $N$ amostras, o delta utilizado no código é **$(P-Y)
 
 A arquitetura foi **[4, 24, 3]**, com uma camada oculta de 24 neurônios, `tanh`, **taxa de aprendizado 0.2**, **2200 épocas**, treinamento em lote completo e semente 42. A acurácia no teste foi de **85.67%**.
 
-![Figura 4: Perda multiclasse]\(figures/fig4.png)
+![Figura 4: Perda multiclasse](figures/fig4.png)
 
 A Figura 4 mostra a redução da perda de treino no problema multiclasse.
 
-![Figura 5: Matriz de confusão]\(figures/fig5.png)
+![Figura 5: Matriz de confusão](figures/fig5.png)
 
 A matriz de confusão do conjunto de teste foi:
 
 | Classe real / prevista | 0 | 1 | 2 |
-
 |---|---:|---:|---:|
-
 | 0 | 87 | 6 | 7 |
-
 | 1 | 10 | 81 | 9 |
-
 | 2 | 5 | 6 | 89 |
 
 ```python
-
 --8<-- "docs/exercises/mlp/code/ex3c.py"
-
 ```
 
 ### D — Análise
@@ -190,45 +174,33 @@ O par mais confundido foi Classes 0 e 1, com 16 erros bidirecionais (6 amostras 
 Foi utilizada a arquitetura **[4, 24, 24, 3]**, com **duas camadas ocultas** de 24 neurônios cada. Foram mantidos os mesmos dados, divisão treino/teste, ativação, taxa de aprendizado **0.2**, **2200 épocas** e semente 42 do Exercício 3. A acurácia no teste foi **84.00%**.
 
 ```python
-
 --8<-- "docs/exercises/mlp/code/ex4a.py"
-
 ```
 
 ### B — Compare
 
-![Figura 6: Comparação das perdas]\(figures/fig6.png)
+![Figura 6: Comparação das perdas](figures/fig6.png)
 
 A Figura 6 compara as perdas de treinamento das duas arquiteturas no Exercício 4B, com semente 42 e o mesmo orçamento de épocas. A tabela a seguir apresenta os resultados das execuções individuais dos Exercícios 3C e 4A; a rede profunda do 4B tem inicialização diferente, pois compartilha o gerador com a rede rasa.
 
 | Modelo | Camadas ocultas | Parâmetros | Perda final de treino (semente 42) | Acurácia no teste (semente 42) |
-
 |---|---:|---:|---:|---:|
-
 | Exercício 3 — [4,24,3] | 1 | 195 | 0.269152 | 85.67% |
-
 | Exercício 4 — [4,24,24,3] | 2 | 795 | 0.204812 | 84.00% |
 
 Para verificar se a diferença depende da inicialização, foram realizadas três execuções com sementes diferentes, mantendo os demais hiperparâmetros fixos:
 
 | Semente | Rede rasa | Rede profunda |
-
 |---|---:|---:|
-
 | 42 | 85.67% | 86.67% |
-
 | 43 | 84.67% | 87.00% |
-
 | 44 | 87.33% | 84.00% |
-
 | **Média** | **85.89%** | **85.89%** |
 
 As duas arquiteturas apresentaram a mesma acurácia média de 85.89% nas três sementes, resultando em uma diferença média de 0.00 ponto percentual. Entretanto, o desempenho variou entre as inicializações, mostrando que a comparação com apenas uma semente poderia levar a conclusões diferentes.
 
 ```python
-
-\\--8<-- "docs/exercises/mlp/code/ex4b.py"
-
+--8<-- "docs/exercises/mlp/code/ex4b.py"
 ```
 
 ### C — Análise
@@ -240,23 +212,13 @@ A rede rasa possui **195 parâmetros**, enquanto a rede profunda possui **795 pa
 ## Resumo dos resultados
 
 | # | Quantidade | Valor |
-
 |---|---|---|
-
 | 1 | Ex. 1 — $z^{(1)}$ e $h^{(1)}$ | $[0.270000,-0.180000]$ e $[0.263625,-0.178081]$ |
-
 | 2 | Ex. 1 — $u^{(2)}$, $\hat y$ e $L$ | 0.385237; 0.367247; 0.400377 |
-
 | 3 | Ex. 1 — oito parâmetros atualizados | $W^{(1)}=[[0.376405,-0.130562],[0.152295,0.419082]]$; $b^{(1)}=[0.252811,-0.295410]$; $W^{(2)}=[0.586587,-0.358490]$; $b^{(2)}=0.528448$ |
-
 | 4 | Ex. 2 — linha de base linear | 47.50% |
-
 | 5 | Ex. 2 — arquitetura e acurácia | [2,16,1]; 92.50% |
-
 | 6 | Ex. 3 — arquitetura e acurácia | [4,24,3]; 85.67% |
-
 | 7 | Ex. 3 — par mais confundido | Classes 0 e 1; 16 erros |
-
 | 8 | Ex. 4 — arquitetura e acurácia | [4,24,24,3]; 84.00% |
-
 | 9 | Ex. 4 — diferença média de acurácia (3 sementes) | 0.00 ponto percentual (profunda − rasa) |
