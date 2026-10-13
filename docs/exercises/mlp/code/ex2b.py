@@ -1,3 +1,4 @@
+from ex2a import Xbt, Xbe, ybt, ybe
 from sklearn.linear_model import LogisticRegression
 
 base_b = LogisticRegression(max_iter=2000).fit(Xbt, ybt).score(Xbe, ybe)

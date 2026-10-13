@@ -1,3 +1,5 @@
+from ex3a import Xmt, Xme, ymt, yme
+from mlp_core import MLP
 import numpy as np
 import matplotlib.pyplot as plt
 
