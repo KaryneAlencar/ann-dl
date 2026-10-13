@@ -1,3 +1,6 @@
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+
 Xm, ym = make_classification(
     n_samples=1500,
     n_features=4,

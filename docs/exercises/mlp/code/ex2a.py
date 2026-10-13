@@ -1,3 +1,9 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.datasets import make_blobs
+from sklearn.model_selection import train_test_split
+
 centers = np.array([
     [0.0, 0.0],
     [3.0, 3.0],
@@ -36,3 +42,7 @@ plt.title("Figura 1: Dados binários não linearmente separáveis")
 plt.xlabel("x1")
 plt.ylabel("x2")
 plt.legend()
+
+plt.tight_layout()
+plt.savefig("figures/fig1.png", dpi=170, bbox_inches="tight")
+plt.show()

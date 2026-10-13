@@ -1,3 +1,6 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
 seeds = [42, 43, 44]
 runs = []
 
@@ -70,9 +73,20 @@ print(f"Rede profunda: {mean_deep:.2%}")
 print(f"Diferença (profunda - rasa): {difference * 100:.2f} pontos percentuais")
 
 plt.figure(figsize=(7, 5))
-plt.plot(hs,label="1 camada oculta")
-plt.plot(hdeep,label="2 camadas ocultas")
+
+plt.plot(
+    hs,
+    label="1 camada oculta"
+)
+
+plt.plot(
+    hdeep,
+    label="2 camadas ocultas"
+)
+
 plt.title("Figura 6: Perda de treino — comparação de profundidade")
 plt.xlabel("Época")
 plt.ylabel("Entropia cruzada categórica")
 plt.legend()
+
+savefig(6)

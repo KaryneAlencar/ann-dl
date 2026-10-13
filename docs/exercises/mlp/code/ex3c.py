@@ -1,3 +1,9 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+
 baseline = LogisticRegression(max_iter=2000)
 baseline.fit(Xmt, ymt)
 
@@ -26,16 +32,14 @@ print(f"Acurácia do MLP: {acc_s:.2%}")
 
 plt.figure(figsize=(7, 5))
 
-plt.plot(
-    np.arange(1, len(hs) + 1),
-    hs,
-    label="Treino"
-)
+plt.plot(np.arange(1, len(hs) + 1),hs,label="Treino")
 
 plt.title("Figura 4: Perda de treino — multiclasse")
 plt.xlabel("Época")
 plt.ylabel("Entropia cruzada categórica")
 plt.legend()
+
+savefig(4)
 
 predictions = shallow.predict(Xme)
 cm = confusion_matrix(yme, predictions)
@@ -65,6 +69,8 @@ plt.yticks(range(3))
 plt.title("Figura 5: Matriz de confusão — MLP")
 plt.xlabel("Classe prevista")
 plt.ylabel("Classe real")
+
+savefig(5)
 
 pairs = {}
 

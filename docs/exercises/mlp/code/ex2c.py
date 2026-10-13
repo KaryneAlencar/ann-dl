@@ -1,3 +1,6 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
 binary = MLP(
     layers=[2, 16, 1],
     task="binary",
@@ -20,23 +23,20 @@ print(f"Acurácia no teste: {acc_b:.2%}")
 
 plt.figure(figsize=(7, 5))
 
-plt.plot(
-    np.arange(1, len(hb) + 1),
-    hb,
-    label="Treino"
-)
+plt.plot(np.arange(1, len(hb) + 1),hb,label="Treino")
 
 plt.title("Figura 2: Perda de treino — binário")
 plt.xlabel("Época")
 plt.ylabel("Entropia cruzada binária")
 plt.legend()
 
+savefig(2)
+
 xmin = Xb[:, 0].min() - 1
 xmax = Xb[:, 0].max() + 1
 
 ymin = Xb[:, 1].min() - 1
 ymax = Xb[:, 1].max() + 1
-
 
 xx, yy = np.meshgrid(
     np.linspace(xmin, xmax, 240),
@@ -47,7 +47,6 @@ grid_points = np.c_[xx.ravel(), yy.ravel()]
 
 zz = binary.predict(grid_points)
 zz = zz.reshape(xx.shape)
-
 
 plt.figure(figsize=(7, 5))
 
@@ -73,3 +72,5 @@ plt.title("Figura 3: Fronteira de decisão do MLP")
 plt.xlabel("x1")
 plt.ylabel("x2")
 plt.legend()
+
+savefig(3)
