@@ -1,21 +1,23 @@
+
 from ex3a import Xmt, Xme, ymt, yme
 from mlp_core import MLP
 
-LR = 0.2
-EPOCHS = 2200
-
 import numpy as np
 import matplotlib.pyplot as plt
+
+LR = 0.2
+EPOCHS = 2200
 
 seeds = [42, 43, 44]
 runs = []
 
 for seed in seeds:
+    rng = np.random.default_rng(seed)
 
     shallow_model = MLP(
         layers=[4, 24, 3],
         task="multi",
-        seed=seed
+        rng=rng
     )
 
     shallow_history = shallow_model.fit(
@@ -28,7 +30,7 @@ for seed in seeds:
     deep_model = MLP(
         layers=[4, 24, 24, 3],
         task="multi",
-        seed=seed
+        rng=rng
     )
 
     deep_history = deep_model.fit(
@@ -76,7 +78,10 @@ difference = mean_deep - mean_shallow
 print("\nAcurácia média:")
 print(f"Rede rasa: {mean_shallow:.2%}")
 print(f"Rede profunda: {mean_deep:.2%}")
-print(f"Diferença (profunda - rasa): {difference * 100:.2f} pontos percentuais")
+print(
+    f"Diferença (profunda - rasa): "
+    f"{difference * 100:.2f} pontos percentuais"
+)
 
 plt.figure(figsize=(7, 5))
 

@@ -3,10 +3,12 @@ from mlp_core import MLP
 import numpy as np
 import matplotlib.pyplot as plt
 
+rng = np.random.default_rng(42)
+
 binary = MLP(
     layers=[2, 16, 1],
     task="binary",
-    seed=42
+    rng=rng
 )
 
 hb = binary.fit(

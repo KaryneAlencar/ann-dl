@@ -1,13 +1,17 @@
+
 import numpy as np
 
+
 class MLP:
-    def __init__(self, layers, task="binary", seed=42):
+    def __init__(self, layers, task="binary", rng=None):
         self.layers = layers
         self.task = task
-        r = np.random.default_rng(seed)
+
+        if rng is None:
+            raise ValueError("É necessário fornecer o gerador rng.")
 
         self.W = [
-            r.normal(0, np.sqrt(2 / (a + b)), size=(a, b))
+            rng.normal(0, np.sqrt(2 / (a + b)), size=(a, b))
             for a, b in zip(layers[:-1], layers[1:])
         ]
 

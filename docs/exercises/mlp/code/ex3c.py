@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
 
+rng = np.random.default_rng(42)
+
 baseline = LogisticRegression(max_iter=2000)
 baseline.fit(Xmt, ymt)
 
@@ -17,7 +19,7 @@ EPOCHS = 2200
 shallow = MLP(
     layers=[4, 24, 3],
     task="multi",
-    seed=42
+    rng=rng 
 )
 
 hs = shallow.fit(
