@@ -44,5 +44,4 @@ plt.ylabel("x2")
 plt.legend()
 
 plt.tight_layout()
-plt.savefig("figures/fig1.png", dpi=170, bbox_inches="tight")
 plt.show()

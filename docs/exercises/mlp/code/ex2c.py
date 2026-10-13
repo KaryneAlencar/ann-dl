@@ -29,8 +29,7 @@ plt.title("Figura 2: Perda de treino — binário")
 plt.xlabel("Época")
 plt.ylabel("Entropia cruzada binária")
 plt.legend()
-
-savefig(2)
+plt.show()
 
 xmin = Xb[:, 0].min() - 1
 xmax = Xb[:, 0].max() + 1
@@ -72,5 +71,4 @@ plt.title("Figura 3: Fronteira de decisão do MLP")
 plt.xlabel("x1")
 plt.ylabel("x2")
 plt.legend()
-
-savefig(3)
+plt.show()

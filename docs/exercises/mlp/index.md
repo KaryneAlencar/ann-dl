@@ -1,6 +1,9 @@
 ---
+
 exercise: mlp
+
 ai_use: "Apoio na estruturação do relatório"
+
 ---
 
 ## Exercício 1
@@ -72,7 +75,9 @@ Foram geradas 1000 amostras com `make_blobs`, utilizando centros $[0,0]$, $[3,3]
 A Figura 1 mostra a Classe 1 em duas regiões opostas em relação à Classe 0. Por isso, uma única reta não consegue separar corretamente as duas classes.
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/ex2a.py"
+
 ```
 
 ### B — Linha de base
@@ -80,7 +85,9 @@ A Figura 1 mostra a Classe 1 em duas regiões opostas em relação à Classe 0. 
 A regressão logística treinada no conjunto de treino obteve **47.50%** de acurácia no teste. Como sua fronteira de decisão é linear, ela não consegue representar as duas regiões distintas que pertencem à Classe 1.
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/ex2b.py"
+
 ```
 
 ### C — Implemente o MLP
@@ -91,7 +98,7 @@ $$L=-\frac1N\sum_i[y_i\log\hat y_i+(1-y_i)\log(1-\hat y_i)].$$
 
 A retropropagação calcula o delta da saída como $\delta=(\hat y-y)/N$. Em cada camada, os gradientes são $\partial L/\partial W=a_{anterior}^T\delta$ e $\partial L/\partial b=\sum_i\delta_i$. O delta é propagado usando os pesos e a derivada da `tanh`. Todos os pesos e biases são atualizados por gradiente descendente, sem diferenciação automática.
 
-O treinamento utilizou **taxa de aprendizado 0.3**, **1800 épocas** e semente 42. A acurácia no teste foi de **92.50%**.
+O treinamento utilizou **taxa de aprendizado 0.3**, **1800 épocas** e semente 42. Para garantir reprodutibilidade, os dados foram gerados e divididos com `random_state=42`, enquanto os pesos da classe `MLP` foram inicializados com `np.random.default_rng(seed)`; neste experimento, `seed=42`. A comparação do Exercício 4 altera apenas essa semente para 42, 43 e 44, mantendo os demais parâmetros. A acurácia no teste foi de **92.50%**.
 
 ![Figura 2: Perda binária](figures/fig2.png)
 
@@ -102,18 +109,22 @@ A Figura 2 apresenta a redução da entropia cruzada durante o treinamento.
 A Figura 3 apresenta a fronteira de decisão não linear encontrada pelo MLP sobre os pontos de teste.
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/mlp_core.py"
+
 ```
 
 O trecho a seguir realiza o treinamento, mede a acurácia e gera as Figuras 2 e 3.
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/ex2c.py"
+
 ```
 
 ### D — Análise
 
-A regressão logística ficou abaixo de 50% porque tenta separar as classes com apenas uma reta. Entretanto, a Classe 1 ocupa duas regiões distantes, em lados opostos da Classe 0. Na Figura 3, a região prevista como Classe 1 envolve os dois grupos externos, enquanto a região central é atribuída à Classe 0. Essa separação exige uma fronteira não linear. A camada oculta combina ativações de vários neurônios e permite que o MLP represente essa geometria, alcançando **92.50%**, contra **47.50%** da linha de base.
+A regressão logística ficou abaixo de 50% porque tenta separar as classes com apenas uma reta. Entretanto, a Classe 1 ocupa duas regiões distantes, em lados opostos da Classe 0. Na Figura 3, o MLP aprende uma região central predominantemente associada à Classe 0 e regiões externas associadas à Classe 1. Essa separação exige uma fronteira não linear. A camada oculta combina ativações de vários neurônios e permite que o MLP represente essa geometria, alcançando **92.50%**, contra **47.50%** da linha de base.
 
 ## Exercício 3
 
@@ -122,12 +133,14 @@ A regressão logística ficou abaixo de 50% porque tenta separar as classes com 
 Foram geradas **1500 amostras**, com **4 features informativas**, **3 classes** e **2 grupos por classe**, usando `make_classification`, `class_sep=1.0` e `random_state=42`. A divisão treino/teste foi de 80/20, com estratificação.
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/ex3a.py"
+
 ```
 
 ### B — Adapte a rede
 
-A mesma classe `MLP` do Exercício 2 foi reutilizada, sem alterar o código de passagem direta, retropropagação ou atualização. A arquitetura agora possui três saídas, com softmax e entropia cruzada categórica:
+A implementação central `mlp_core.py` é a mesma utilizada no Exercício 2. Não foi necessário criar outra classe nem modificar o algoritmo de retropropagação ou atualização dos parâmetros: o argumento `task` seleciona a saída sigmoide com entropia cruzada binária (`binary`) ou a saída softmax com entropia cruzada categórica (`multi`). Dessa forma, a mesma estrutura de camadas e treinamento é reutilizada nos dois problemas. A arquitetura agora possui três saídas, com softmax e entropia cruzada categórica:
 
 $$p_k=\frac{e^{u_k}}{\sum_j e^{u_j}},\qquad L=-\sum_k y_k\log p_k.$$
 
@@ -154,13 +167,19 @@ A Figura 4 mostra a redução da perda de treino no problema multiclasse.
 A matriz de confusão do conjunto de teste foi:
 
 | Classe real / prevista | 0 | 1 | 2 |
+
 |---|---:|---:|---:|
+
 | 0 | 87 | 6 | 7 |
+
 | 1 | 10 | 81 | 9 |
+
 | 2 | 5 | 6 | 89 |
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/ex3c.py"
+
 ```
 
 ### D — Análise
@@ -174,7 +193,9 @@ O par mais confundido foi Classes 0 e 1, com 16 erros bidirecionais (6 amostras 
 Foi utilizada a arquitetura **[4, 24, 24, 3]**, com **duas camadas ocultas** de 24 neurônios cada. Foram mantidos os mesmos dados, divisão treino/teste, ativação, taxa de aprendizado **0.2**, **2200 épocas** e semente 42 do Exercício 3. A acurácia no teste foi **84.00%**.
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/ex4a.py"
+
 ```
 
 ### B — Compare
@@ -184,41 +205,61 @@ Foi utilizada a arquitetura **[4, 24, 24, 3]**, com **duas camadas ocultas** de 
 A Figura 6 compara as perdas de treinamento das duas arquiteturas sob o mesmo orçamento de épocas.
 
 | Modelo | Camadas ocultas | Parâmetros | Perda final de treino (semente 42) | Acurácia no teste (semente 42) |
+
 |---|---:|---:|---:|---:|
+
 | Exercício 3 — [4,24,3] | 1 | 195 | 0.269152 | 85.67% |
+
 | Exercício 4 — [4,24,24,3] | 2 | 795 | 0.204812 | 84.00% |
 
 Para verificar se a diferença depende da inicialização, foram realizadas três execuções com sementes diferentes, mantendo os demais hiperparâmetros fixos:
 
 | Semente | Rede rasa | Rede profunda |
+
 |---|---:|---:|
+
 | 42 | 85.67% | 84.00% |
+
 | 43 | 84.67% | 84.33% |
+
 | 44 | 87.33% | 86.33% |
+
 | **Média** | **85.89%** | **84.89%** |
 
 A rede profunda apresentou acurácia média **1.00 ponto percentual inferior** à rede rasa.
 
 ```python
+
 --8<-- "docs/exercises/mlp/code/ex4b.py"
+
 ```
 
 ### C — Análise
 
-A segunda camada oculta não melhorou a generalização neste experimento. Embora a rede profunda tenha reduzido mais a perda de treino (0.204812 contra 0.269152, na semente 42), sua acurácia de teste foi menor (84.00% contra 85.67%). Isso sugere que a capacidade adicional de ajustar os dados de treino não trouxe uma melhoria correspondente nas previsões de teste.
+A segunda camada oculta não melhorou a generalização neste experimento. Embora a rede profunda tenha reduzido mais a perda de treino (0.204812 contra 0.269152, na semente 42), sua acurácia de teste foi menor (84.00% contra 85.67%). Isso sugere que a capacidade adicional de ajustar os dados de treino não trouxe uma melhoria correspondente nas previsões de teste. Esse resultado, isoladamente, não comprova overfitting: para investigá-lo melhor, seria necessário acompanhar também o desempenho em um conjunto de validação ao longo das épocas.
 
 O conjunto possui seis grupos distribuídos entre três classes, e uma camada oculta de 24 neurônios já consegue representar fronteiras relativamente complexas. A rede profunda aumenta os parâmetros de 195 para 795, tornando a otimização mais complexa e oferecendo maior capacidade de ajuste. Ela poderia compensar em dados com estruturas hierárquicas ou composições sucessivas de padrões, como imagens com características locais combinadas em objetos, nos quais várias etapas de transformação são úteis.
 
 ## Resumo dos resultados
 
 | # | Quantidade | Valor |
+
 |---|---|---|
+
 | 1 | Ex. 1 — $z^{(1)}$ e $h^{(1)}$ | $[0.270000,-0.180000]$ e $[0.263625,-0.178081]$ |
+
 | 2 | Ex. 1 — $u^{(2)}$, $\hat y$ e $L$ | 0.385237; 0.367247; 0.400377 |
+
 | 3 | Ex. 1 — oito parâmetros atualizados | $W^{(1)}=[[0.376405,-0.130562],[0.152295,0.419082]]$; $b^{(1)}=[0.252811,-0.295410]$; $W^{(2)}=[0.586587,-0.358490]$; $b^{(2)}=0.528448$ |
+
 | 4 | Ex. 2 — linha de base linear | 47.50% |
+
 | 5 | Ex. 2 — arquitetura e acurácia | [2,16,1]; 92.50% |
+
 | 6 | Ex. 3 — arquitetura e acurácia | [4,24,3]; 85.67% |
+
 | 7 | Ex. 3 — par mais confundido | Classes 0 e 1; 16 erros |
+
 | 8 | Ex. 4 — arquitetura e acurácia | [4,24,24,3]; 84.00% |
+
 | 9 | Ex. 4 — diferença média de acurácia (3 sementes) | −1.00 ponto percentual (profunda − rasa) |
