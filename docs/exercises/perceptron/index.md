@@ -31,13 +31,13 @@ Os pesos são inicializados aleatoriamente com `rng.normal(0, 0.01, size=2)` e o
 
 O treinamento registra a acurácia e o número de atualizações após cada época. A condição de parada ocorre quando uma passagem completa pelo dataset não produz nenhuma atualização ou quando o limite de 100 épocas é atingido. A mesma implementação também permite guardar os melhores pesos encontrados durante o treino, recurso utilizado no Exercício 2.
 
-**Implementação do perceptron:**
+**Funções auxiliares e preparação dos dados:**
 
 ```python
 --8<-- "docs/exercises/perceptron/code/perceptron_shared.py"
 ```
 
-**Execução do Exercício 1B:**
+Implementação do perceptron:
 
 ```python
 --8<-- "docs/exercises/perceptron/code/ex1b.py"
