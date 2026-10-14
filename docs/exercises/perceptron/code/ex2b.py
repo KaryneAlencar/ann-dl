@@ -1,3 +1,7 @@
+from perceptron_shared import np, prepare_overlap
+from ex1b import train_perceptron
+rng, X_overlap, y_overlap = prepare_overlap()
+
 w_initial_overlap = rng.normal(0, 0.01, size=2)
 
 result_overlap = train_perceptron(
@@ -19,3 +23,4 @@ print("w pocket:", result_overlap["pocket_w"])
 print("b pocket:", result_overlap["pocket_b"])
 print(f"Acurácia pocket: {result_overlap['pocket_accuracy']:.4f} ({100*result_overlap['pocket_accuracy']:.2f}%)")
 print("Época do melhor pocket:", result_overlap["pocket_epoch"])
+

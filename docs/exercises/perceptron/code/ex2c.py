@@ -1,3 +1,10 @@
+from perceptron_shared import np, plt, FIGURES, prepare_overlap, plot_boundary
+from ex1b import train_perceptron, predict_perceptron
+rng, X_overlap, y_overlap = prepare_overlap()
+w_initial_overlap = rng.normal(0,.01,size=2)
+result_overlap = train_perceptron(X_overlap,y_overlap,w_initial_overlap,eta=.01,max_epochs=100,use_pocket=True)
+
+# Figura 5
 pred_final = predict_perceptron(
     X_overlap, result_overlap["w"], result_overlap["b"]
 )
@@ -37,8 +44,10 @@ ax.set_xlabel("$x_1$")
 ax.set_ylabel("$x_2$")
 ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left")
 plt.tight_layout()
+plt.savefig(FIGURES / "fig5.png", dpi=150, bbox_inches="tight")
 plt.show()
 
+# Figura 6
 epochs_overlap = np.arange(1, result_overlap["epochs"] + 1)
 
 plt.figure()
@@ -52,4 +61,6 @@ plt.ylabel("Acurácia")
 plt.ylim(0, 1.0)
 plt.legend()
 plt.tight_layout()
+plt.savefig(FIGURES / "fig6.png", dpi=150, bbox_inches="tight")
 plt.show()
+

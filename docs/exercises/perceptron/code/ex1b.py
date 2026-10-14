@@ -1,3 +1,5 @@
+import numpy as np
+
 def predict_perceptron(X, w, b):
     return (X @ w + b >= 0).astype(int)
 
@@ -66,3 +68,10 @@ def train_perceptron(X, y, w_initial, b_initial=0.0,
         "pocket_epoch": best_epoch,
         "pocket_history": np.array(pocket_history)
     }
+
+if __name__ == "__main__":
+    from perceptron_shared import prepare_sep
+    rng, X, y = prepare_sep()
+    w = rng.normal(0,.01,size=2)
+    result = train_perceptron(X,y,w)
+    print("w:",result["w"],"b:",result["b"],"épocas:",result["epochs"],"acurácia:",result["accuracy"])

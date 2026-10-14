@@ -1,3 +1,7 @@
+from perceptron_shared import np, plt, FIGURES, prepare_sep, plot_boundary
+from ex1b import train_perceptron, predict_perceptron
+rng, X_sep, y_sep = prepare_sep()
+
 w_initial_sep = rng.normal(0, 0.01, size=2)
 b_initial_sep = 0.0
 
@@ -26,6 +30,7 @@ def plot_boundary(ax, w, b, x_limits, label, linestyle="-"):
         ax.axvline(-b / w[0], linestyle=linestyle, linewidth=2, label=label)
 
 
+# Figura 2
 pred_sep = predict_perceptron(X_sep, result_sep["w"], result_sep["b"])
 wrong_sep = pred_sep != y_sep
 
@@ -51,6 +56,45 @@ ax.set_xlabel("$x_1$")
 ax.set_ylabel("$x_2$")
 ax.legend()
 plt.tight_layout()
+plt.savefig(FIGURES / "fig2.png", dpi=150, bbox_inches="tight")
 plt.show()
 
 print("Pontos mal classificados:", wrong_sep.sum())
+
+# Figura 3
+epochs_sep = np.arange(1, result_sep["epochs"] + 1)
+
+plt.figure()
+plt.plot(epochs_sep, result_sep["accuracy_history"], marker="o")
+plt.title("Figura 3: Acurácia por época — dados separáveis")
+plt.xlabel("Época")
+plt.ylabel("Acurácia")
+plt.ylim(0, 1.05)
+plt.xticks(epochs_sep)
+plt.tight_layout()
+plt.savefig(FIGURES / "fig3.png", dpi=150, bbox_inches="tight")
+plt.show()
+
+result_sep_eta1 = train_perceptron(
+    X_sep, y_sep,
+    w_initial=w_initial_sep,
+    b_initial=b_initial_sep,
+    eta=1.0,
+    max_epochs=100
+)
+
+direction_eta001 = result_sep["w"] / np.linalg.norm(result_sep["w"])
+direction_eta1 = result_sep_eta1["w"] / np.linalg.norm(result_sep_eta1["w"])
+
+print("eta = 0.01")
+print("  épocas:", result_sep["epochs"])
+print(f"  acurácia: {100*result_sep['accuracy']:.2f}%")
+print("  w:", result_sep["w"])
+print("  w/||w||:", direction_eta001)
+
+print("\neta = 1.0")
+print("  épocas:", result_sep_eta1["epochs"])
+print(f"  acurácia: {100*result_sep_eta1['accuracy']:.2f}%")
+print("  w:", result_sep_eta1["w"])
+print("  w/||w||:", direction_eta1)
+

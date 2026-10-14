@@ -1,17 +1,18 @@
-mu_overlap_0 = np.array([3.0, 3.0])
-mu_overlap_1 = np.array([4.0, 4.0])
-cov_overlap = np.array([[1.5, 0.0],
-                        [0.0, 1.5]])
+from perceptron_shared import np, plt, FIGURES, prepare_overlap
+rng, X_overlap, y_overlap = prepare_overlap()
 
-X2_0 = rng.multivariate_normal(mu_overlap_0, cov_overlap, size=1000)
-X2_1 = rng.multivariate_normal(mu_overlap_1, cov_overlap, size=1000)
+# Figura 4
+plt.figure()
+plt.scatter(X_overlap[y_overlap == 0, 0], X_overlap[y_overlap == 0, 1],
+            alpha=0.5, s=18, label="Classe 0")
+plt.scatter(X_overlap[y_overlap == 1, 0], X_overlap[y_overlap == 1, 1],
+            alpha=0.5, s=18, label="Classe 1")
+plt.title("Figura 4: Dados sobrepostos")
+plt.xlabel("$x_1$")
+plt.ylabel("$x_2$")
+plt.legend()
+plt.tight_layout()
+plt.savefig(FIGURES / "fig4.png", dpi=150, bbox_inches="tight")
+plt.show()
 
-X_overlap = np.vstack([X2_0, X2_1])
-y_overlap = np.concatenate([
-    np.zeros(1000, dtype=int),
-    np.ones(1000, dtype=int)
-])
-
-print("Shape de X:", X_overlap.shape)
-print("Classe 0:", np.sum(y_overlap == 0), "amostras")
-print("Classe 1:", np.sum(y_overlap == 1), "amostras")
+print("Shape de X:",X_overlap.shape)

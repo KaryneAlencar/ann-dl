@@ -16,21 +16,33 @@ A Figura 1 mostra duas nuvens bem separadas. Visualmente já existe uma faixa va
 ```
 
 ### B
-O perceptron foi implementado do zero. A predição utiliza a função degrau, retornando 1 quando $\mathbf{w}\cdot\mathbf{x}+b \geq 0$ e 0 caso contrário. Durante o treinamento, o erro é calculado por $y-\hat{y}$ e os parâmetros são atualizados somente quando ocorre uma classificação incorreta:
+
+O perceptron foi implementado do zero, sem utilizar modelos prontos de bibliotecas. A predição utiliza a função degrau, retornando 1 quando $\mathbf{w}\cdot\mathbf{x}+b \geq 0$ e 0 caso contrário. Durante o treinamento, o erro é calculado por $y-\hat{y}$ e os parâmetros são atualizados somente quando ocorre uma classificação incorreta:
 
 $$
 \mathbf{w} \leftarrow \mathbf{w} + \eta(y-\hat{y})\mathbf{x}
 $$
 
 $$
-b \leftarrow b + \eta(y-\hat{y}).
+b \leftarrow b + \eta(y-\hat{y})
 $$
 
+Os pesos são inicializados aleatoriamente com `rng.normal(0, 0.01, size=2)` e o bias inicial é igual a zero. A taxa de aprendizado utilizada é $\eta=0.01$.
+
 O treinamento registra a acurácia e o número de atualizações após cada época. A condição de parada ocorre quando uma passagem completa pelo dataset não produz nenhuma atualização ou quando o limite de 100 épocas é atingido. A mesma implementação também permite guardar os melhores pesos encontrados durante o treino, recurso utilizado no Exercício 2.
+
+**Implementação do perceptron:**
+
+```python
+--8<-- "docs/exercises/perceptron/code/perceptron_shared.py"
+```
+
+**Execução do Exercício 1B:**
 
 ```python
 --8<-- "docs/exercises/perceptron/code/ex1b.py"
 ```
+
 
 ### C
 Para $\eta=0.01$, os pesos foram inicializados com `rng.normal(0, 0.01, size=2)` e o bias inicial foi 0. A execução produziu:

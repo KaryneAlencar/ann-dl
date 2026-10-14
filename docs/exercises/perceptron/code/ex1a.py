@@ -1,17 +1,18 @@
-mu0 = np.array([1.5, 1.5])
-mu1 = np.array([5.0, 5.0])
-cov_sep = np.array([[0.5, 0.0],
-                    [0.0, 0.5]])
+from perceptron_shared import np, plt, FIGURES, prepare_sep
+rng, X_sep, y_sep = prepare_sep()
 
-X0 = rng.multivariate_normal(mu0, cov_sep, size=1000)
-X1 = rng.multivariate_normal(mu1, cov_sep, size=1000)
+# Figura 1
+plt.figure()
+plt.scatter(X_sep[y_sep == 0, 0], X_sep[y_sep == 0, 1],
+            alpha=0.55, s=18, label="Classe 0")
+plt.scatter(X_sep[y_sep == 1, 0], X_sep[y_sep == 1, 1],
+            alpha=0.55, s=18, label="Classe 1")
+plt.title("Figura 1: Dados linearmente separáveis")
+plt.xlabel("$x_1$")
+plt.ylabel("$x_2$")
+plt.legend()
+plt.tight_layout()
+plt.savefig(FIGURES / "fig1.png", dpi=150, bbox_inches="tight")
+plt.show()
 
-X_sep = np.vstack([X0, X1])
-y_sep = np.concatenate([
-    np.zeros(1000, dtype=int),
-    np.ones(1000, dtype=int)
-])
-
-print("Shape de X:", X_sep.shape)
-print("Classe 0:", np.sum(y_sep == 0), "amostras")
-print("Classe 1:", np.sum(y_sep == 1), "amostras")
+print("Shape de X:",X_sep.shape)
