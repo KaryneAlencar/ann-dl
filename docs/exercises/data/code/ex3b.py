@@ -10,3 +10,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 if __name__ == '__main__':
     print(f'Tamanho do Treino: {X_train.shape[0]} linhas')
     print(f'Tamanho do Teste: {X_test.shape[0]} linhas')
+
+print("Média de FoodCourt no treino:", X_train["FoodCourt"].mean())
+print("Mediana de FoodCourt no treino:", X_train["FoodCourt"].median())

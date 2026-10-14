@@ -51,7 +51,7 @@ Geração do Dataset II de cascas concêntricas (raios 2.0 e 5.0) sorteando dire
 ### C
 ![Figura 4](figures/fig4.png)
 
-* A variância explicada pelos dois primeiros componentes (PC1 + PC2) no Dataset I é **0.6723** e no Dataset II é **0.4310**. A projeção preserva muito melhor a informação relevante no **Dataset I**.
+* A variância explicada pelos dois primeiros componentes (PC1 + PC2) no Dataset I é **0.6730** e no Dataset II é **0.4310**. A projeção preserva muito melhor a informação relevante no **Dataset I**.
 
 ![Figura 5](figures/fig5.png)
 
@@ -96,7 +96,7 @@ Divisão 80/20 de forma estratificada pelo alvo, mantendo 6954 linhas no Treino 
 2. **Features Categóricas:** As variáveis HomePlanet, CryoSleep, Destination e VIP foram convertidas usando One-Hot Encoding. Para tratar eventuais categorias inéditas que possam surgir apenas no conjunto de teste, o codificador foi configurado com o parâmetro `handle_unknown='ignore'`. Assim, caso o modelo encontre uma string desconhecida, ele preencherá todas as colunas derivadas dessa variável com o valor 0, evitando quebras na execução.
 3. **Engenharia de features:** Feature `TotalSpend` criada a partir da soma dos gastos.
 4. **Cauda Pesada:** A transformação $\log(1+x)$ foi aplicada às colunas de gastos para comprimir os valores extremos. Essa etapa é crucial para redes neurais que utilizam a função $	anh$, pois valores de entrada muito altos causam a saturação imediata da ativação, zerando os gradientes e impedindo o aprendizado. O logaritmo aproxima essas grandezas, mantendo os dados num regime onde a rede consegue operar.
-5. **Escalonamento:** Optei pela normalização explícita para o intervalo $[-1, 1]$ utilizando o MinMaxScaler. Essa escolha alinha a escala das features numéricas perfeitamente com o domínio e a saída da função de ativação tangente hiperbólica.
+5. **Escalonamento:** Optei pela normalização com `MinMaxScaler(feature_range=(-1, 1))`, ajustado exclusivamente no conjunto de treinamento. Essa escolha mantém as features numéricas do treino em uma escala compatível com a função de ativação $\tanh$. No conjunto de teste, valores fora dos limites observados no treino podem resultar em valores escalonados ligeiramente fora do intervalo definido.
 
 ```python
 --8<-- "docs/exercises/data/code/ex3c.py"
@@ -106,9 +106,9 @@ Divisão 80/20 de forma estratificada pelo alvo, mantendo 6954 linhas no Treino 
 ![Figura 6](figures/fig6.png)
 
 **Verificação de dados:** 
-O shape final da matriz de features de treino ficou em **(6954, 17)** e há 0 NaNs remanescentes tanto no treino quanto no teste. O intervalo de valores contínuos resultante para $	anh$ está contido entre **-1.0000** e **1.0000**.
+O shape final da matriz de features de treino ficou em **(6954, 17)** e o de teste em **(1739, 17)**, sem valores NaN remanescentes em nenhum dos conjuntos. Após o escalonamento, os valores das features numéricas ficaram entre **-1.0000 e 1.0000 no treino** e entre **-1.0000 e 1.1383 no teste**. O valor máximo do teste ultrapassou 1 porque o `MinMaxScaler` foi ajustado exclusivamente com os dados de treinamento. Isso é esperado quando o teste contém valores maiores do que os observados no treino e não representa um erro no pré-processamento.
 
-Dentre todas as decisões de pré-processamento tomadas, a transformação logarítmica ($\log(1+x)$) aliada ao escalonamento para $[-1, 1]$ é a que mais afetaria o sucesso do treinamento da rede neural. A função $	anh$ é altamente sensível e satura rapidamente em seus extremos (aproximando-se de -1 ou 1) quando recebe valores absolutos altos, o que anula os gradientes e trava o aprendizado. Como as colunas de gastos possuíam caudas pesadas com passageiros gastando milhares de dólares, inserir esses dados brutos causaria a saturação instantânea da rede. A aplicação do logaritmo comprimiu esses picos extremos, permitindo que a variação financeira dos passageiros coubesse na região linear e ativa da $	anh$, viabilizando a convergência do modelo.
+Dentre todas as decisões de pré-processamento tomadas, considero que a transformação logarítmica ($\log(1+x)$) aliada ao escalonamento para $[-1, 1]$ é uma das que mais afetariam o sucesso do treinamento da rede neural. A função $\tanh$ pode saturar quando recebe valores absolutos muito altos, produzindo gradientes pequenos e dificultando o aprendizado. Como as colunas de gastos possuíam caudas pesadas, com passageiros gastando milhares de dólares, inserir esses dados brutos poderia prejudicar o treinamento. A aplicação do logaritmo comprimiu esses valores extremos, enquanto o escalonamento colocou as features em uma escala mais adequada para a rede neural, favorecendo um treinamento mais estável e facilitando a convergência do modelo.
 
 ## Resumo dos resultados
 
@@ -121,9 +121,9 @@ Dentre todas as decisões de pré-processamento tomadas, a transformação logar
 | 5 | Menor `r_{ij}` em `s=1.0`, e qual é o par | 1.3258 (Classe 0 e 1) |
 | 6 | Distância entre os centros - Dataset I | 3.3541 |
 | 7 | Distância entre os centros - Dataset II | 0.2347 |
-| 8 | Variância explicada `PC1+PC2` - Dataset I | 0.6723 |
+| 8 | Variância explicada `PC1+PC2` - Dataset I | 0.6730 |
 | 9 | Variância explicada `PC1+PC2` - Dataset II | 0.4310 |
 | 10 | Proporção da classe positiva em Transported | 50.36% |
-| 11 | Média e mediana de FoodCourt no treino, antes de transformar | Média: 458.077203, Mediana: 0.0 |
+| 11 | Média e mediana de FoodCourt no treino, antes de transformar | Média: 452.61117647058825, Mediana: 0.0 |
 | 12 | shape final da matriz de features de treino | (6954, 17) |
-| 13 | Mínimo e máximo do treino e do teste após o escalonamento | Mínimo: -1.0, Máximo: 1.0 |
+| 13 | Mínimo e máximo do treino e do teste após o escalonamento | Treino: [-1.0000, 1.0000]; Teste: [-1.0000, 1.1383] |

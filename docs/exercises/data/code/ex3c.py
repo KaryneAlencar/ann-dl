@@ -78,3 +78,6 @@ print(f"Total de NaNs no Teste: {total_nan_teste}")
 print(f"Shape do Treino: {shape_treino}")
 print(f"Shape do Teste: {shape_teste}")
 print(f"Intervalo de valores contínuos: [{min_val:.4f}, {max_val:.4f}]")
+
+print("Mínimo no teste:", X_test_final[colunas_num_com_total].min().min())
+print("Máximo no teste:", X_test_final[colunas_num_com_total].max().max())
