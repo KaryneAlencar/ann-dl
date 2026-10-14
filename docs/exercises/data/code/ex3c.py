@@ -1,3 +1,11 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
+from ex3b import X_train, X_test
+
 colunas_num = ['Age', 'RoomService', 'FoodCourt', 'ShoppingMall', 'Spa', 'VRDeck']
 colunas_cat = ['HomePlanet', 'CryoSleep', 'Destination', 'VIP']
 
@@ -47,6 +55,26 @@ sns.histplot(foodcourt_antes, bins=40, ax=axes[0], color='blue')
 axes[0].set_title('FoodCourt ANTES de log(1+x)')
 sns.histplot(foodcourt_depois, bins=40, ax=axes[1], color='green')
 axes[1].set_title('FoodCourt DEPOIS de log(1+x)')
+axes[0].set_xlabel('Gasto em FoodCourt')
+axes[1].set_xlabel('log(1 + FoodCourt)')
+axes[0].set_ylabel('Contagem')
+axes[1].set_ylabel('Contagem')
 plt.suptitle('Figura 6: Efeito da Transformação Logarítmica')
 plt.tight_layout()
+plt.savefig('fig6.png')
 plt.show()
+total_nan_treino = X_train_final.isna().sum().sum()
+total_nan_teste = X_test_final.isna().sum().sum()
+
+shape_treino = X_train_final.shape
+shape_teste = X_test_final.shape
+
+min_val = X_train_final[colunas_num_com_total].values.min()
+max_val = X_train_final[colunas_num_com_total].values.max()
+
+print("--- CHECAGENS FINAIS ---")
+print(f"Total de NaNs no Treino: {total_nan_treino}")
+print(f"Total de NaNs no Teste: {total_nan_teste}")
+print(f"Shape do Treino: {shape_treino}")
+print(f"Shape do Teste: {shape_teste}")
+print(f"Intervalo de valores contínuos: [{min_val:.4f}, {max_val:.4f}]")
