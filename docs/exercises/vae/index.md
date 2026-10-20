@@ -44,7 +44,7 @@ Treinei com Adam, taxa de aprendizado **0,001**, batches de **128** e **20 époc
 --8<-- "docs/exercises/vae/code/ex1c.py"
 ```
 
-![Figura 1 — Reconstrução e KL por época, em treino e validação](figures/fig1.png)
+![Figura 1](figures/fig1.png)
 
 *Figura 1 — Evolução da reconstrução e da KL para o VAE de dimensão latente 16.*
 
@@ -57,13 +57,13 @@ Na Figura 2, cada coluna traz a primeira imagem de teste de um dígito (0 a 9) e
 --8<-- "docs/exercises/vae/code/ex1d.py"
 ```
 
-![Figura 2 — Primeiros exemplos de cada dígito e reconstruções](figures/fig2.png)
+![Figura 2](figures/fig2.png)
 
 *Figura 2 — Originais (acima) e reconstruções a partir de μ (abaixo).*
 
 Na Figura 3, gero **64 amostras do prior N(0,I)**, em uma grade 8 × 8, depois de executar `torch.manual_seed(0)`.
 
-![Figura 3 — 64 amostras do prior](figures/fig3.png)
+![Figura 3](figures/fig3.png)
 
 *Figura 3 — Amostras novas decodificadas do prior gaussiano.*
 
@@ -101,7 +101,7 @@ A Figura 4 apresenta as médias `μ` das **10.000 imagens de teste**, usando cor
 --8<-- "docs/exercises/vae/code/ex2b.py"
 ```
 
-![Figura 4 — Espaço latente 2-D colorido por dígito](figures/fig4.png)
+![Figura 4](figures/fig4.png)
 
 *Figura 4 — Distribuição dos dígitos no espaço das médias latentes.*
 
@@ -114,7 +114,7 @@ Na Figura 5, decodifiquei uma grade 15 × 15 com coordenadas `norm.ppf(q)`, onde
 --8<-- "docs/exercises/vae/code/ex2c.py"
 ```
 
-![Figura 5 — Plano latente decodificado](figures/fig5.png)
+![Figura 5](figures/fig5.png)
 
 *Figura 5 — Imagens geradas em diferentes regiões do plano latente.*
 
@@ -129,7 +129,7 @@ Escolhi os índices de teste **0 (dígito 7)** e **2 (dígito 1)**, que correspo
 --8<-- "docs/exercises/vae/code/ex2d.py"
 ```
 
-![Figura 6 — Interpolações em pixels e no espaço latente](figures/fig6.png)
+![Figura 6](figures/fig6.png)
 
 *Figura 6 — Mistura direta de pixels (linha superior) e interpolação no espaço latente de dimensão 16 (linha inferior).*
 
