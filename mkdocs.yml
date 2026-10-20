@@ -1,8 +1,8 @@
 site_name: Redes Neurais e Deep Learning
 site_author: Alencar, k.
-site_url: https://karynealencar.github.io/Redes_Neurais/
-repo_url: https://github.com/KaryneAlencar/Redes_Neurais.git
-repo_name: KaryneAlencar/Redes_Neurais
+site_url: https://karynealencar.github.io/ann-dl/
+repo_url: https://github.com/KaryneAlencar/ann-dl
+repo_name: KaryneAlencar/ann-dl
 
 theme:
   name: material

@@ -5,6 +5,7 @@ mkdocs-material
 mkdocs-material-extensions
 mkdocs-minify-plugin
 mkdocs-glightbox
+selectolax<1.0.0
 mkdocs-git-authors-plugin
 mkdocs-git-committers-plugin-2
 mkdocs-git-revision-date-localized-plugin
