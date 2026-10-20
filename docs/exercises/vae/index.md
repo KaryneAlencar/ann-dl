@@ -44,7 +44,7 @@ Treinei com Adam, taxa de aprendizado **0,001**, batches de **128** e **20 époc
 --8<-- "docs/exercises/vae/code/ex1c.py"
 ```
 
-![Figura 1](figures/fig1.png)
+<img src="figures/fig1.png" alt="Figura 1" style="width: 100%; height: auto;">
 
 *Figura 1 — Evolução da reconstrução e da KL para o VAE de dimensão latente 16.*
 
