@@ -5,7 +5,7 @@ ai_use: "Estruturação do relatório em Markdown"
 
 ## Exercício 1
 
-### A
+### A - Gere os dados
 A abordagem para este item envolveu a geração de duas classes de pontos 2D, com **1000 amostras por classe**, usando distribuições normais multivariadas. A Classe 0 foi gerada com média $[1.5, 1.5]$ e a Classe 1 com média $[5.0, 5.0]$, ambas com matriz de covariância $[[0.5, 0], [0, 0.5]]$.
 A Figura 1 mostra duas nuvens bem separadas. Visualmente já existe uma faixa vazia entre as classes na qual uma reta pode ser posicionada, o que é exatamente o tipo de problema que um perceptron de camada única consegue resolver.
 
@@ -15,7 +15,7 @@ A Figura 1 mostra duas nuvens bem separadas. Visualmente já existe uma faixa va
 --8<-- "docs/exercises/perceptron/code/ex1a.py"
 ```
 
-### B
+### B - Implemente o perceptron
 
 O perceptron foi implementado do zero, sem utilizar modelos prontos de bibliotecas. A predição utiliza a função degrau, retornando 1 quando $\mathbf{w}\cdot\mathbf{x}+b \geq 0$ e 0 caso contrário. Durante o treinamento, o erro é calculado por $y-\hat{y}$ e os parâmetros são atualizados somente quando ocorre uma classificação incorreta:
 
@@ -44,7 +44,7 @@ Implementação do perceptron:
 ```
 
 
-### C
+### C - Treine e meça
 Para $\eta=0.01$, os pesos foram inicializados com `rng.normal(0, 0.01, size=2)` e o bias inicial foi 0. A execução produziu:
 
 * Pesos iniciais: $[0.00253205,\ 0.00895218]$.
@@ -66,7 +66,7 @@ A Figura 3 mostra a acurácia obtida após cada época durante o treinamento.A a
 --8<-- "docs/exercises/perceptron/code/ex1c.py"
 ```
 
-### D
+### D - Análise
 
 1. **Por que dados separáveis convergem rápido?** A regra de atualização só altera os parâmetros quando há erro:
 
@@ -110,7 +110,7 @@ A Figura 3 mostra a acurácia obtida após cada época durante o treinamento.A a
 
 ## Exercício 2
 
-### A
+### A - Gere os dados
 Para o segundo exercício foram geradas novamente duas classes 2D com **1000 amostras por classe**, agora com maior sobreposição. A Classe 0 possui média $[3.0,3.0]$, a Classe 1 possui média $[4.0,4.0]$ e ambas utilizam matriz de covariância $[[1.5,0],[0,1.5]]$.
 
 ![Figura 4](figures/fig4.png)
@@ -121,7 +121,7 @@ A Figura 4 mostra que as duas classes possuem uma região de sobreposição sign
 --8<-- "docs/exercises/perceptron/code/ex2a.py"
 ```
 
-### B
+### B - Treine guardando os melhores pesos
 A mesma implementação do perceptron foi reutilizada com $\eta=0.01$ e limite de 100 épocas. Para este conjunto, o treinamento também guardou os melhores parâmetros encontrados até cada instante por meio do pocket.
 
 Os parâmetros ao final das 100 épocas foram:
@@ -141,7 +141,7 @@ Os melhores parâmetros guardados pelo pocket foram:
 --8<-- "docs/exercises/perceptron/code/ex2b.py"
 ```
 
-### C
+### C - Figuras
 ![Figura 5](figures/fig5.png)
 
 A Figura 5 compara a fronteira produzida pelos pesos finais com a fronteira correspondente aos pesos guardados pelo pocket. O gráfico também destaca os pontos mal classificados por cada uma das duas soluções.
@@ -154,7 +154,7 @@ A Figura 6 compara, ao longo das épocas, a acurácia dos pesos atuais com a mel
 --8<-- "docs/exercises/perceptron/code/ex2c.py"
 ```
 
-### D
+### D - Análise
 
 1. **Por que os pesos finais e os pesos do pocket são diferentes?** Nos dados sobrepostos existem pontos de classes diferentes em regiões incompatíveis com uma separação linear. Portanto, corrigir um erro pode criar outro erro em uma amostra que já estava correta. A atualização causada por um engano possui magnitude
 

@@ -5,7 +5,7 @@ ai_use: "Estruturação do relatório em Markdown"
 
 ## Exercício 1
 
-### A
+### A - Gere as nuvens
 A abordagem para este item envolveu a geração de um dataset sintético de 400 amostras divididas em 4 classes usando uma distribuição gaussiana com médias e desvios padrão predefinidos. A semente foi fixada usando `rng = np.random.default_rng(42)`.
 
 ![Figura 1](figures/fig1.png)
@@ -14,7 +14,7 @@ A abordagem para este item envolveu a geração de um dataset sintético de 400 
 --8<-- "docs/exercises/data/code/ex1a.py"
 ```
 
-### B
+### B - Mais ou menos espalhado
 ![Figura 2](figures/fig2.png)
 
 ![Figura 3](figures/fig3.png)
@@ -27,28 +27,28 @@ A abordagem para este item envolveu a geração de um dataset sintético de 400 
 --8<-- "docs/exercises/data/code/ex1b.py"
 ```
 
-### C
+### C - Análise
 1. **Sobreposição no dataset original ($s=1$):** No dataset original a Classe 3 está totalmente isolada à direita, a Classe 2 está bem concentrada e levemente próxima da Classe 1, mas sem sobreposição significativa e a Classe 0 e a Classe 1 apresentam uma sobreposição maior. Uma única reta divide o plano bidimensional em apenas 2 regiões; como temos 4 classes, é impossível separá-las por apenas 1 linha. O conjunto de fronteiras não conseguiria separar perfeitamente, isolaria as classes 2 e 3 sem problemas, mas devido à zona de sobreposição da classe 0 e 1 nenhuma reta conseguiria separá-los 100%.
 2. **Fronteiras de decisão:** A Figura 1 acima já contém o esboço com as fronteiras de decisão que a rede poderia aprender.
 3. **Relação com espalhamento:** Quanto mais espalhadas as nuvens, maior se torna a região onde a rede necessariamente erra. Isso acontece porque o aumento do desvio padrão empurra pontos de classes diferentes para exatamente as mesmas coordenadas geométricas no espaço bidimensional. Quando um ponto da Classe 0 e um ponto da Classe 1 ocupam o mesmo local a taxa de mistura aumenta. Nessa região de sobreposição não importa o quão profunda ou complexa seja a arquitetura da rede neural.
 
 ## Exercício 2
 
-### A
+### A - Dataset I: gaussianas deslocadas
 Geração do Dataset I com gaussianas deslocadas (500 amostras para Classe A e 500 para Classe B em 5 dimensões). Shape do Dataset I: (1000, 6).
 
 ```python
 --8<-- "docs/exercises/data/code/ex2a.py"
 ```
 
-### B
+### B - Dataset II: cascas concêntricas
 Geração do Dataset II de cascas concêntricas (raios 2.0 e 5.0) sorteando direções na esfera unitária. Shape do Dataset II: (1000, 6).
 
 ```python
 --8<-- "docs/exercises/data/code/ex2b.py"
 ```
 
-### C
+### C - Visualize e compare
 ![Figura 4](figures/fig4.png)
 
 * A variância explicada pelos dois primeiros componentes (PC1 + PC2) no Dataset I é **0.6730** e no Dataset II é **0.4310**. A projeção preserva muito melhor a informação relevante no **Dataset I**.
@@ -62,14 +62,14 @@ Geração do Dataset II de cascas concêntricas (raios 2.0 e 5.0) sorteando dire
 --8<-- "docs/exercises/data/code/ex2c.py"
 ```
 
-### D
+### D - Análise
 1. **Análise de Hiperplano:** Essa combinação geométrica prova que as classes são inseparáveis por uma fronteira linear. Como a distância entre os centros é praticamente zero, ambas as classes compartilham a mesma origem geométrica. Um hiperplano atua dividindo o espaço em duas "metades" retas. É impossível fatiar o espaço com uma superfície reta de forma a isolar uma casca externa de um núcleo que está perfeitamente dentro dela.
 2. **Inseparabilidade Linear:** O modelo linear assume que a fronteira que divide as classes é reta. Coletar mais dados apenas preencherá o núcleo e a casca de forma mais densa, mas a classe C continuará matematicamente englobada pela classe D.
 3. **Transformação PCA:** Uma projeção 2D ruim não prova inseparabilidade. O PCA esmagou o Dataset II em 2 dimensões, misturando totalmente as classes C e D (como visto na Figura 4). No entanto, a Figura 5 (histograma) prova que no espaço 5D original as classes são perfeitamente separáveis, desde que olhemos para a característica certa (o raio da origem). Para separar o Dataset II perfeitamente com uma função matemática simples baseada nas entradas, basta criar uma fronteira de decisão não-linear que calcule o raio ao quadrado. A função seria: $f(x) = \sum_{i=1}^{5} x_{i}^2$. Se $f(x)$ for menor que um valor limiar, por exemplo, o ponto médio entre o fim do núcleo e o começo da casca, o ponto pertence à Classe C (núcleo). Caso contrário, pertence à Classe D (casca).
 
 ## Exercício 3
 
-### A
+### A - Conheça os dados
 O dataset tem como objetivo prever se um passageiro foi transportado para uma dimensão alternativa durante uma anomalia espacial. A coluna Transported é a nossa variável alvo, assumindo valores booleanos. As classes são quase perfeitamente balanceadas (True: 50.36%, False: 49.63%).
 
 **Features:**
@@ -84,14 +84,14 @@ Essa diferença indica que as distribuições são altamente assimétricas com "
 --8<-- "docs/exercises/data/code/ex3a.py"
 ```
 
-### B
+### B - Separe antes de transformar
 Divisão 80/20 de forma estratificada pelo alvo, mantendo 6954 linhas no Treino e 1739 no Teste. Se calcularmos estatísticas como médias para imputação ou valores máximos para escalonamento usando o dataset inteiro, o modelo estará, indiretamente, 'espiando' informações do conjunto de teste durante o treinamento. O conjunto de teste deve permanecer totalmente isolado desde o início para garantir que a avaliação final reflita fielmente o poder de generalização do modelo no mundo real.
 
 ```python
 --8<-- "docs/exercises/data/code/ex3b.py"
 ```
 
-### C
+### C - Pré-processe
 1. **Dados faltantes:** Para as colunas numéricas, utilizei a mediana, pois é uma distribuição com cauda pesada e outliers extremos que distorceriam a média aritmética. Para as colunas categóricas, apliquei a moda. Os imputadores foram ajustados exclusivamente no conjunto de treinamento e apenas aplicados no conjunto de teste, garantindo que não houvesse vazamento de dados.
 2. **Features Categóricas:** As variáveis HomePlanet, CryoSleep, Destination e VIP foram convertidas usando One-Hot Encoding. Para tratar eventuais categorias inéditas que possam surgir apenas no conjunto de teste, o codificador foi configurado com o parâmetro `handle_unknown='ignore'`. Assim, caso o modelo encontre uma string desconhecida, ele preencherá todas as colunas derivadas dessa variável com o valor 0, evitando quebras na execução.
 3. **Engenharia de features:** Feature `TotalSpend` criada a partir da soma dos gastos.
@@ -102,7 +102,7 @@ Divisão 80/20 de forma estratificada pelo alvo, mantendo 6954 linhas no Treino 
 --8<-- "docs/exercises/data/code/ex3c.py"
 ```
 
-### D
+### D - Verifique e visualize
 ![Figura 6](figures/fig6.png)
 
 **Verificação de dados:** 
