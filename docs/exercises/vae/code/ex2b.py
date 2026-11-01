@@ -6,15 +6,19 @@ import matplotlib.pyplot as plt
 from ex1c import DEVICE, FIG
 
 def fig4(model, test_loader):
+    # Armazena as médias latentes e os rótulos das imagens de teste
     points, digits = [], []
     with torch.no_grad():
         for x, y in test_loader:
+            # Codifica cada imagem em um ponto 2-D usando a média
             mu, _ = model.encode(x.to(DEVICE).flatten(1))
             points.append(mu.cpu().numpy())
             digits.append(y.numpy())
     points = np.concatenate(points)
     digits = np.concatenate(digits)
     fig, ax = plt.subplots(figsize=(9, 7))
+
+    # Representa os dez dígitos com cores diferentes no espaço latente
     for d in range(10):
         select = digits == d
         ax.scatter(points[select, 0], points[select, 1], s=3, alpha=0.45, label=str(d))

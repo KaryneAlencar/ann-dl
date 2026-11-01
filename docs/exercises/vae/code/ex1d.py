@@ -10,6 +10,7 @@ def display_img(ax, flat):
     ax.axis('off')
 
 def fig2(model, test):
+    # Encontra a primeira imagem de teste de cada dígito de 0 a 9
     indices = {}
     for i, (_, y) in enumerate(test):
         digit = int(y)
@@ -17,8 +18,12 @@ def fig2(model, test):
             indices[digit] = i
         if len(indices) == 10:
             break
+
+    # Organiza as dez imagens em um único lote
     images = torch.stack([test[indices[d]][0] for d in range(10)]).to(DEVICE).flatten(1)
     with torch.no_grad():
+
+        # Usa a média latente para obter reconstruções determinísticas
         mu, _ = model.encode(images)
         outputs = model.decoder(mu)
     fig, ax = plt.subplots(2, 10, figsize=(13, 3.3))
@@ -35,9 +40,13 @@ def fig2(model, test):
     return indices
 
 def fig3(model):
+    # Fixa a semente solicitada para a geração das amostras
     torch.manual_seed(0)
     with torch.no_grad():
+        # Gera 64 vetores latentes a partir do prior N(0,I)
         z = torch.randn(64, 16, device=DEVICE)
+
+        # Decodifica os vetores para produzir novas imagens
         samples = model.decoder(z).cpu().numpy()
     fig, axs = plt.subplots(8, 8, figsize=(8, 8))
     for ax, sample in zip(axs.ravel(), samples):

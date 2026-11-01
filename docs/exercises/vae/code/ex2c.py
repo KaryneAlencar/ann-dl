@@ -7,11 +7,18 @@ import matplotlib.pyplot as plt
 from ex1c import DEVICE, FIG
 
 def fig5(model):
+    # Constrói 15 coordenadas por eixo usando quantis da normal padrão
     coordinates = norm.ppf(np.linspace(0.05, 0.95, 15))
+
+    # Combina as coordenadas para formar a grade latente 15x15
     xx, yy = np.meshgrid(coordinates, coordinates[::-1])
     zs = torch.tensor(np.stack([xx.ravel(), yy.ravel()], axis=1), dtype=torch.float32, device=DEVICE)
+    
+    # Decodifica os 225 pontos da grade em imagens de 28x28 pixels
     with torch.no_grad():
         decoded = model.decoder(zs).cpu().numpy().reshape(15, 15, 28, 28)
+    
+    # Organiza as imagens decodificadas em um único mosaico 15x15
     canvas = np.zeros((15*28, 15*28))
     for i in range(15):
         for j in range(15):
